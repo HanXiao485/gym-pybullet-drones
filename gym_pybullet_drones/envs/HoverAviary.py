@@ -72,7 +72,7 @@ class HoverAviary(BaseRLAviary):
         # if spatial_curve is not None:
         self.spatial_curve = spatial_curve
         if self.spatial_curve is None:
-            self.TARGET_POS = np.array([1, 1, 1])
+            self.TARGET_POS = np.array([0, 1, 1])
         else:
             # init target position
             self.TARGET_POS = self.spatial_curve.get_position(0)
@@ -95,7 +95,7 @@ class HoverAviary(BaseRLAviary):
 
     def _update_target(self):
         """
-        根据当前仿真时间更新目标位置，如果提供了 spatial_curve。
+        get the target position
         """
         if self.spatial_curve is not None:
             # 使用 step_counter 与 PyBullet 的频率来估计时间 t
