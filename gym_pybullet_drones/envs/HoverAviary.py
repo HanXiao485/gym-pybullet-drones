@@ -5,8 +5,7 @@ from gym_pybullet_drones.utils.enums import DroneModel, Physics, ActionType, Obs
 
 class SpatialCurve:
     """
-    定义空间曲线的类，用户可以重载 get_position 方法来定义自己的曲线。
-    示例中我们实现一个简单的螺旋线：x = A*cos(omega*t), y = A*sin(omega*t), z = z0 + v*t
+    x = A*cos(omega*t), y = A*sin(omega*t), z = z0 + v*t
     """
     def __init__(self, A=1.0, omega=0.5, z0=1.0, v=0.1):
         self.A = A
@@ -16,7 +15,7 @@ class SpatialCurve:
 
     def get_position(self, t):
         """
-        根据时间 t 返回曲线上的位置
+        get position at time t
         """
         x = self.A * np.cos(self.omega * t) - 1
         y = self.A * np.sin(self.omega * t)
@@ -70,12 +69,12 @@ class HoverAviary(BaseRLAviary):
 
         """
         
-        # 如果没有给定曲线，则使用固定目标位置
+        # if spatial_curve is not None:
         self.spatial_curve = spatial_curve
         if self.spatial_curve is None:
             self.TARGET_POS = np.array([1, 1, 1])
         else:
-            # 初始目标点由曲线在t=0处的值决定
+            # init target position
             self.TARGET_POS = self.spatial_curve.get_position(0)
 
         self.EPISODE_LEN_SEC = 8
